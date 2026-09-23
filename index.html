@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUSESOFHP(96) | Himachal Pradesh Local & Long Route Bus Junction</title>
+  <meta name="description" content="Official BUSESOFHP(96) portal. Comprehensive Himachal Pradesh bus timetable for local routes, long-distance inter-state coaches, real-time road conditions and daily bus updates. Admin managed.">
+  <meta name="keywords" content="BUSESOFHP, BUSESOFHP 96, Himachal Pradesh bus timetable, Baijnath bus timings, HRTC local bus, Dharamshala to Delhi Volvo, Himachal bus route update, the bus junction hp">
+
+  <!-- Google Fonts: Outfit (Display/Headings) & Inter (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6.5.1 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top 24/7 Emergency & Daily Advisory Notice Bar -->
+  <aside class="top-notice-bar" aria-label="Official Helplines and Road Notice">
+    <div class="container notice-inner">
+      <div class="notice-left">
+        <span class="live-pulse-dot" title="Live System Online"></span>
+        <span class="brand-tag"><strong>BUSESOFHP(96)</strong></span>
+        <span class="notice-text"><i class="fa-solid fa-mountain-sun"></i> Himachal Pradesh Local & Inter-State Bus Junction</span>
+      </div>
+
+      <div class="notice-right">
+        <span class="status-indicator-pill"><i class="fa-solid fa-satellite-dish"></i> Live Highway Feed</span>
+        <a href="tel:1077" class="helpline-item red-alert-chip" title="Himachal Disaster Helpline">
+          <i class="fa-solid fa-triangle-exclamation"></i> Emergency: 1077
+        </a>
+        <a href="tel:112" class="helpline-item blue-chip" title="Police & Medical Help">
+          <i class="fa-solid fa-shield"></i> Helpline: 112
+        </a>
+        <a href="#tabHelplines" data-target-tab="tabHelplines" class="helpline-item green-chip" title="Himachal Bus Enquiry Counters">
+          <i class="fa-solid fa-headset"></i> Bus Enquiry Desk
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Sticky Admin Control Bar (Appears when logged in as thebusjunction@gmail.com) -->
+  <div class="admin-top-bar" id="adminTopBar" style="display: none;" role="region" aria-label="Admin Control Bar">
+    <div class="container admin-bar-inner">
+      <div class="admin-status-badge">
+        <span class="admin-neon-dot"></span>
+        <i class="fa-solid fa-user-shield text-neon-green"></i>
+        <span><strong>Admin Session Active:</strong> <span id="adminUserEmail" class="text-cyan">thebusjunction@gmail.com</span></span>
+        <span class="admin-role-tag">Super Controller</span>
+      </div>
+      <div class="admin-bar-actions">
+        <button class="btn-neon-sm" id="adminBarAddLocalBtn" aria-label="Add Local Route">
+          <i class="fa-solid fa-plus-circle"></i> + Add Local Route
+        </button>
+        <button class="btn-cyan-sm" id="adminBarAddLongBtn" aria-label="Add Long Route">
+          <i class="fa-solid fa-road"></i> + Add Long Route
+        </button>
+        <button class="btn-red-sm" id="adminBarAddUpdateBtn" aria-label="Post Daily Update">
+          <i class="fa-solid fa-bullhorn"></i> + Post Daily Update
+        </button>
+        <button class="btn-warning-sm" id="adminBarSettingsBtn" aria-label="Route Alteration & Admin Settings">
+          <i class="fa-solid fa-sliders"></i> Admin Route Settings
+        </button>
+        <button class="btn-outline-logout-sm" id="adminLogoutBtn" aria-label="Logout from Admin">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Primary Header & Navigation Bar -->
+  <header class="main-header" id="mainHeader">
+    <div class="container nav-container">
+      <!-- Brand Logo -->
+      <a href="#home" class="brand-logo" id="logoBrandLink" aria-label="BUSESOFHP(96) Home">
+        <div class="brand-icon-box">
+          <i class="fa-solid fa-bus-simple"></i>
+          <span class="brand-badge-num">96</span>
+        </div>
+        <div class="brand-info">
+          <div class="brand-title-wrap">
+            <span class="brand-title-hp">BUSESOFHP</span>
+            <span class="brand-badge-parenthesis">(96)</span>
+          </div>
+          <span class="brand-sub">THE BUS JUNCTION • HIMACHAL PRADESH</span>
+        </div>
+      </a>
+
+      <!-- Navigation Tabs & Links -->
+      <nav class="nav-menu-wrapper" id="navMenu">
+        <ul class="nav-links" role="tablist">
+          <li class="nav-item">
+            <button class="tab-btn active" data-tab="tabLocalRoutes" role="tab" aria-selected="true" id="tabNavLocal">
+              <i class="fa-solid fa-signs-post"></i>
+              <span>Local Bus Routes</span>
+              <span class="nav-count-badge" id="localRouteCountBadge">0</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="tab-btn" data-tab="tabLongRoutes" role="tab" aria-selected="false" id="tabNavLong">
+              <i class="fa-solid fa-route"></i>
+              <span>Long Routed Buses</span>
+              <span class="nav-count-badge cyan-badge" id="longRouteCountBadge">0</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="tab-btn" data-tab="tabDailyUpdates" role="tab" aria-selected="false" id="tabNavUpdates">
+              <i class="fa-solid fa-bullhorn"></i>
+              <span>Daily Updates</span>
+              <span class="nav-count-badge red-badge" id="updatesCountBadge">0</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="tab-btn" data-tab="tabHelplines" role="tab" aria-selected="false" id="tabNavDepots">
+              <i class="fa-solid fa-phone-volume"></i>
+              <span>Depots & Contacts</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Navigation Actions -->
+      <div class="nav-actions">
+        <!-- Route Settings Trigger (Visible when admin is logged in) -->
+        <button class="btn-admin-settings-nav" id="navAdminSettingsBtn" style="display: none;" aria-label="Admin Route Settings" title="Admin Settings for Changing & Altering Routes">
+          <i class="fa-solid fa-sliders text-cyan"></i>
+          <span>Route Settings</span>
+        </button>
+
+        <!-- Admin Portal Trigger Button -->
+        <button class="btn-admin-portal" id="navAdminLoginBtn" aria-label="Admin Portal Sign In" title="Route Controller Admin Portal">
+          <i class="fa-solid fa-lock" id="navAdminLockIcon"></i>
+          <span id="navAdminBtnText">Admin Login</span>
+        </button>
+
+        <!-- Mobile Drawer Toggle -->
+        <button class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars" id="mobileToggleIcon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section with Search & Real-Time Status -->
+  <section class="hero-section" id="home">
+    <div class="hero-background-overlay"></div>
+    <div class="hero-glow-blob cyan-blob"></div>
+    <div class="hero-glow-blob neon-blob"></div>
+    <div class="hero-glow-blob red-blob"></div>
+
+    <div class="container hero-content">
+      <div class="hero-badge-tag">
+        <span class="pulse-beacon"></span>
+        <span>HIMACHAL PRADESH'S LOCAL & LONG ROUTE NETWORK</span>
+      </div>
+
+      <h1 class="hero-title">
+        BUSES OF <span class="gradient-cyan">HIMACHAL</span> <span class="gradient-neon">(96)</span>
+      </h1>
+      <p class="hero-tagline">
+        The unified bus junction for rural Himachal routes, valley feeders, inter-district services, and long-route luxury coaches connecting to Delhi, Chandigarh & beyond.
+      </p>
+
+      <!-- Quick Tab Switcher Ribbon -->
+      <div class="hero-tab-ribbon">
+        <button class="hero-quick-btn active" data-target-tab="tabLocalRoutes">
+          <i class="fa-solid fa-signs-post"></i> Local Bus Routes
+        </button>
+        <button class="hero-quick-btn" data-target-tab="tabLongRoutes">
+          <i class="fa-solid fa-route"></i> Long Routed Buses
+        </button>
+        <button class="hero-quick-btn" data-target-tab="tabDailyUpdates">
+          <i class="fa-solid fa-bullhorn"></i> Daily Road & Bus Updates
+        </button>
+        <button class="hero-quick-btn" data-target-tab="tabHelplines">
+          <i class="fa-solid fa-phone-volume"></i> Emergency Depots
+        </button>
+      </div>
+
+      <!-- Unified Interactive Search Box -->
+      <div class="search-panel-card">
+        <div class="search-panel-header">
+          <div class="search-title">
+            <i class="fa-solid fa-magnifying-glass text-cyan"></i>
+            <span>Search Timetables, Routes & Stations</span>
+          </div>
+          <span class="search-scope-pill" id="searchScopePill">Searching: Local Routes</span>
+        </div>
+
+        <div class="search-form-row">
+          <div class="search-input-group">
+            <label for="routeSearchInput"><i class="fa-solid fa-location-dot"></i> From / To / Station</label>
+            <input type="text" id="routeSearchInput" placeholder="e.g. Baijnath, Palampur, Dharamshala, Kangra, Delhi..." autocomplete="off">
+            <button type="button" class="input-clear-btn" id="clearSearchBtn" title="Clear Search" style="display: none;">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <div class="search-select-group">
+            <label for="timeFilterSelect"><i class="fa-regular fa-clock"></i> Departure Slot</label>
+            <select id="timeFilterSelect">
+              <option value="all">Any Departure Time</option>
+              <option value="morning">Morning (04:00 AM - 11:59 AM)</option>
+              <option value="afternoon">Afternoon (12:00 PM - 04:59 PM)</option>
+              <option value="evening">Evening (05:00 PM - 08:59 PM)</option>
+              <option value="night">Night (09:00 PM - 03:59 AM)</option>
+            </select>
+          </div>
+
+          <div class="search-select-group">
+            <label for="busTypeFilterSelect"><i class="fa-solid fa-bus"></i> Bus Category</label>
+            <select id="busTypeFilterSelect">
+              <option value="all">All Bus Categories</option>
+              <option value="HRTC Ordinary">HRTC Ordinary</option>
+              <option value="Him-Gaurav AC">Him-Gaurav AC</option>
+              <option value="Volvo / Scania Luxury">Volvo / Scania Luxury</option>
+              <option value="Himmani Deluxe">Himmani Deluxe</option>
+              <option value="Electric Bus">Electric Bus (Green)</option>
+              <option value="Private Local">Private Local Bus</option>
+              <option value="Night Express">Superfast Night Express</option>
+            </select>
+          </div>
+
+          <button class="btn-search-submit" id="executeSearchBtn" aria-label="Search Routes">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+          </button>
+        </div>
+
+        <!-- Real-Time Search Stats / Active Query Feedback -->
+        <div class="search-feedback-bar" id="searchFeedbackBar" style="display: none;">
+          <span id="searchFeedbackText">Showing filtered results</span>
+          <button class="btn-reset-filters" id="resetAllFiltersBtn">
+            <i class="fa-solid fa-rotate-left"></i> Reset Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Multi-Tab Application Interface -->
+  <main class="main-content-area container">
+
+    <!-- =====================================================================
+         TAB 1: LOCAL BUS ROUTES (HP)
+         ===================================================================== -->
+    <section class="tab-panel active" id="tabLocalRoutes" role="tabpanel" aria-labelledby="tabNavLocal">
+      <!-- Section Header & Controls -->
+      <div class="section-top-bar">
+        <div class="section-title-wrap">
+          <div class="badge-tag-neon"><i class="fa-solid fa-signs-post"></i> LOCAL CONNECTIVITY</div>
+          <h2 class="section-heading">Himachal Pradesh <span class="text-neon-green">Local Bus Routes</span></h2>
+          <p class="section-desc">Regular village feeders, tehsil shuttles, ordinary HRTC buses, and private local links across Kangra Valley and neighboring districts.</p>
+        </div>
+
+        <!-- Local Route Admin Controls -->
+        <div class="section-action-buttons">
+          <div class="admin-only-action" id="localAdminActions" style="display: none;">
+            <button class="btn-warning-action" id="openLocalSettingsBtn" title="Route Alteration Settings">
+              <i class="fa-solid fa-sliders"></i> Alteration Settings
+            </button>
+            <button class="btn-neon-action" id="openAddLocalModalBtn">
+              <i class="fa-solid fa-plus-circle"></i> + Add Local Route
+            </button>
+          </div>
+          <div class="public-admin-hint" id="localPublicAdminHint">
+            <button class="btn-outline-admin-hint" data-action="open-admin-login">
+              <i class="fa-solid fa-lock text-cyan"></i> Route Controller Login
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Filter Chips for Local Routes -->
+      <div class="filter-chips-container" id="localFilterChips">
+        <span class="filter-label"><i class="fa-solid fa-filter"></i> Hubs:</span>
+        <button class="chip active" data-filter="all">All Local Routes</button>
+        <button class="chip" data-filter="Baijnath">Baijnath Hub</button>
+        <button class="chip" data-filter="Palampur">Palampur & Maranda</button>
+        <button class="chip" data-filter="Dharamshala">Dharamshala & McLeodGanj</button>
+        <button class="chip" data-filter="Kangra">Kangra & Chamunda</button>
+        <button class="chip" data-filter="Bir Billing">Bir Billing Paragliding</button>
+        <button class="chip" data-filter="Mandi">Mandi & Joginder Nagar</button>
+      </div>
+
+      <!-- Local Routes Grid Container (Starts strictly empty: 0 routes until Admin adds them) -->
+      <div class="routes-grid" id="localRoutesGridContainer" aria-live="polite">
+        <!-- Dynamic Local Route Cards or Empty State will be rendered here -->
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         TAB 2: LONG ROUTED BUS DETAILS (Dedicated Tab with Direct Admin Login & Controls)
+         ===================================================================== -->
+    <section class="tab-panel" id="tabLongRoutes" role="tabpanel" aria-labelledby="tabNavLong">
+      <!-- Section Header -->
+      <div class="section-top-bar">
+        <div class="section-title-wrap">
+          <div class="badge-tag-cyan"><i class="fa-solid fa-road"></i> INTER-STATE & INTER-DISTRICT</div>
+          <h2 class="section-heading">Himachal <span class="text-cyan">Long Routed Bus Details</span></h2>
+          <p class="section-desc">Inter-state luxury Volvo coaches, Him-Gaurav AC, Himmani, and superfast express routes connecting Himachal Pradesh to Delhi, Chandigarh, Haridwar, Punjab & Jammu.</p>
+        </div>
+
+        <!-- Dedicated Admin Actions Box on Long Route Tab -->
+        <div class="section-action-buttons">
+          <!-- Shown if Admin IS logged in -->
+          <div class="admin-only-action" id="longRouteAdminActions" style="display: none;">
+            <button class="btn-warning-action" id="openLongSettingsBtn" title="Route Alteration Settings">
+              <i class="fa-solid fa-sliders"></i> Alteration Settings
+            </button>
+            <button class="btn-cyan-action" id="openAddLongModalBtn">
+              <i class="fa-solid fa-plus-circle"></i> + Add Long Route
+            </button>
+          </div>
+
+          <!-- Shown if Admin is NOT logged in: Direct Login Trigger as requested -->
+          <div class="public-admin-hint" id="longRoutePublicAdminHint">
+            <button class="btn-outline-admin-long" data-action="open-admin-login" title="Login to Add, Alter, or Delete Long Routes">
+              <i class="fa-solid fa-key text-neon-green"></i>
+              <span>Admin Login (Alter / Delete Long Routes)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Long Route Dedicated Admin Banner -->
+      <div class="long-route-admin-banner" id="longRouteAdminBanner">
+        <div class="banner-left">
+          <i class="fa-solid fa-shield-halved text-cyan"></i>
+          <div>
+            <strong>Long Route Controller Panel:</strong>
+            <span id="longRouteBannerStatusText">Admin authorization required to alter, delete, or create long-distance routes.</span>
+          </div>
+        </div>
+        <div class="banner-right" id="longRouteBannerBtnWrap">
+          <button class="btn-cyan-sm" data-action="open-admin-login" id="longRouteBannerLoginBtn">
+            <i class="fa-solid fa-lock"></i> Controller Login
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Filter Chips for Long Routes -->
+      <div class="filter-chips-container" id="longFilterChips">
+        <span class="filter-label"><i class="fa-solid fa-filter"></i> Destinations:</span>
+        <button class="chip active" data-long-filter="all">All Long Routes</button>
+        <button class="chip" data-long-filter="Delhi">Delhi ISBT (Kashmere Gate)</button>
+        <button class="chip" data-long-filter="Chandigarh">Chandigarh (Sec 43)</button>
+        <button class="chip" data-long-filter="Haridwar">Haridwar & Rishikesh</button>
+        <button class="chip" data-long-filter="Shimla">Shimla Capital Express</button>
+        <button class="chip" data-long-filter="Amritsar">Amritsar & Pathankot</button>
+        <button class="chip" data-long-filter="Volvo">Volvo / Luxury Only</button>
+      </div>
+
+      <!-- Long Routes Grid Container (Starts strictly empty: 0 routes until Admin adds them) -->
+      <div class="routes-grid long-routes-grid" id="longRoutesGridContainer" aria-live="polite">
+        <!-- Dynamic Long Route Cards or Empty State will be rendered here -->
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         TAB 3: DAILY UPDATES & ROAD CONDITIONS (Regular Bus Updates)
+         ===================================================================== -->
+    <section class="tab-panel" id="tabDailyUpdates" role="tabpanel" aria-labelledby="tabNavUpdates">
+      <!-- Section Header -->
+      <div class="section-top-bar">
+        <div class="section-title-wrap">
+          <div class="badge-tag-red"><i class="fa-solid fa-bullhorn"></i> REAL-TIME BULLETIN</div>
+          <h2 class="section-heading">Daily Himachal <span class="text-red">Bus & Highway Updates</span></h2>
+          <p class="section-desc">Official regular announcements regarding road conditions, landslide clearances, weather disruptions, temporary diversions, and special festival buses.</p>
+        </div>
+
+        <!-- Daily Updates Admin Controls -->
+        <div class="section-action-buttons">
+          <div class="admin-only-action" id="updatesAdminActions" style="display: none;">
+            <button class="btn-warning-action" id="openUpdatesSettingsBtn" title="Daily Updates Settings">
+              <i class="fa-solid fa-sliders"></i> Updates Settings
+            </button>
+            <button class="btn-red-action" id="openAddUpdateModalBtn">
+              <i class="fa-solid fa-plus-circle"></i> + Post Daily Update
+            </button>
+          </div>
+          <div class="public-admin-hint" id="updatesPublicAdminHint">
+            <button class="btn-outline-admin-hint" data-action="open-admin-login">
+              <i class="fa-solid fa-lock text-red"></i> Post Update as Admin
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Chips for Daily Updates -->
+      <div class="filter-chips-container" id="updatesFilterChips">
+        <span class="filter-label"><i class="fa-solid fa-filter"></i> Category:</span>
+        <button class="chip active" data-update-filter="all">All Updates</button>
+        <button class="chip" data-update-filter="road">Road & Weather Conditions</button>
+        <button class="chip" data-update-filter="delay">Delays & Cancellations</button>
+        <button class="chip" data-update-filter="timetable">Timetable Revisions</button>
+        <button class="chip" data-update-filter="special">Festival / Special Buses</button>
+      </div>
+
+      <!-- Daily Updates List Container -->
+      <div class="daily-updates-list" id="dailyUpdatesContainer" aria-live="polite">
+        <!-- Dynamic Update Items will be rendered here -->
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         TAB 4: DEPOTS & EMERGENCY HELPLINES
+         ===================================================================== -->
+    <section class="tab-panel" id="tabHelplines" role="tabpanel" aria-labelledby="tabNavDepots">
+      <div class="section-top-bar">
+        <div class="section-title-wrap">
+          <div class="badge-tag-blue"><i class="fa-solid fa-building-shield"></i> 24/7 ENQUIRY DESK</div>
+          <h2 class="section-heading">Himachal Bus Stands & <span class="text-cyan">Enquiry Directory</span></h2>
+          <p class="section-desc">Direct contact numbers for key Himachal bus stands, inquiry counters, and emergency services.</p>
+        </div>
+      </div>
+
+      <div class="depots-grid">
+        <!-- Baijnath Bus Stand -->
+        <article class="depot-card">
+          <div class="depot-card-header">
+            <div class="depot-icon-badge"><i class="fa-solid fa-bus"></i></div>
+            <div>
+              <h3 class="depot-name">Baijnath Bus Stand</h3>
+              <span class="depot-location"><i class="fa-solid fa-location-dot"></i> Kangra District (H.P.)</span>
+            </div>
+          </div>
+          <div class="depot-contact-list">
+            <div class="depot-row">
+              <span class="depot-label">HRTC Enquiry:</span>
+              <a href="tel:01894242224" class="depot-value"><i class="fa-solid fa-phone"></i> 01894-242224</a>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">Counter Service:</span>
+              <span class="depot-value text-neon-green">24 Hours Open</span>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">Major Routes:</span>
+              <span class="depot-value text-dim">Delhi, Chandigarh, Dharamshala, Palampur, Mandi, Bir Billing</span>
+            </div>
+          </div>
+          <a href="tel:01894242224" class="btn-depot-call"><i class="fa-solid fa-phone"></i> Call Baijnath Counter</a>
+        </article>
+
+        <!-- Dharamshala Bus Stand -->
+        <article class="depot-card">
+          <div class="depot-card-header">
+            <div class="depot-icon-badge"><i class="fa-solid fa-bus"></i></div>
+            <div>
+              <h3 class="depot-name">Dharamshala ISBT</h3>
+              <span class="depot-location"><i class="fa-solid fa-location-dot"></i> Kangra District (H.P.)</span>
+            </div>
+          </div>
+          <div class="depot-contact-list">
+            <div class="depot-row">
+              <span class="depot-label">ISBT Enquiry:</span>
+              <a href="tel:01892224903" class="depot-value"><i class="fa-solid fa-phone"></i> 01892-224903</a>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">Volvo Counter:</span>
+              <a href="tel:01892224903" class="depot-value"><i class="fa-solid fa-phone"></i> 01892-224903</a>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">Major Routes:</span>
+              <span class="depot-value text-dim">Delhi Kashmere Gate, Chandigarh Sec 43, Shimla, Pathankot</span>
+            </div>
+          </div>
+          <a href="tel:01892224903" class="btn-depot-call"><i class="fa-solid fa-phone"></i> Call Dharamshala Counter</a>
+        </article>
+
+        <!-- Palampur Bus Stand -->
+        <article class="depot-card">
+          <div class="depot-card-header">
+            <div class="depot-icon-badge"><i class="fa-solid fa-bus"></i></div>
+            <div>
+              <h3 class="depot-name">Palampur Bus Stand</h3>
+              <span class="depot-location"><i class="fa-solid fa-location-dot"></i> Kangra District (H.P.)</span>
+            </div>
+          </div>
+          <div class="depot-contact-list">
+            <div class="depot-row">
+              <span class="depot-label">HRTC Enquiry:</span>
+              <a href="tel:01894230666" class="depot-value"><i class="fa-solid fa-phone"></i> 01894-230666</a>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">Local Feeder Desk:</span>
+              <span class="depot-value text-neon-green">Active (06:00 - 21:00)</span>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">Major Routes:</span>
+              <span class="depot-value text-dim">Baijnath, Kangra, Chamunda, Maranda, Delhi Volvo</span>
+            </div>
+          </div>
+          <a href="tel:01894230666" class="btn-depot-call"><i class="fa-solid fa-phone"></i> Call Palampur Counter</a>
+        </article>
+
+        <!-- Kangra Bus Stand -->
+        <article class="depot-card">
+          <div class="depot-card-header">
+            <div class="depot-icon-badge"><i class="fa-solid fa-bus"></i></div>
+            <div>
+              <h3 class="depot-name">Kangra Bus Stand</h3>
+              <span class="depot-location"><i class="fa-solid fa-location-dot"></i> Kangra District (H.P.)</span>
+            </div>
+          </div>
+          <div class="depot-contact-list">
+            <div class="depot-row">
+              <span class="depot-label">HRTC Enquiry:</span>
+              <a href="tel:01892265129" class="depot-value"><i class="fa-solid fa-phone"></i> 01892-265129</a>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">Temple Shuttle:</span>
+              <span class="depot-value text-neon-green">Brajeshwari & Chamunda Devi</span>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">Major Routes:</span>
+              <span class="depot-value text-dim">Dharamshala, Baijnath, Chandigarh, Pathankot, Shimla</span>
+            </div>
+          </div>
+          <a href="tel:01892265129" class="btn-depot-call"><i class="fa-solid fa-phone"></i> Call Kangra Counter</a>
+        </article>
+
+        <!-- Shimla ISBT (Tutikandi) -->
+        <article class="depot-card">
+          <div class="depot-card-header">
+            <div class="depot-icon-badge"><i class="fa-solid fa-bus"></i></div>
+            <div>
+              <h3 class="depot-name">Shimla ISBT (Tutikandi)</h3>
+              <span class="depot-location"><i class="fa-solid fa-location-dot"></i> Capital ISBT (H.P.)</span>
+            </div>
+          </div>
+          <div class="depot-contact-list">
+            <div class="depot-row">
+              <span class="depot-label">Central Enquiry:</span>
+              <a href="tel:01772656326" class="depot-value"><i class="fa-solid fa-phone"></i> 0177-2656326</a>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">HRTC Helpline:</span>
+              <a href="tel:18001808185" class="depot-value"><i class="fa-solid fa-headset"></i> 1800-180-8185</a>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">Major Routes:</span>
+              <span class="depot-value text-dim">Kangra, Mandi, Manali, Chandigarh, Delhi ISBT, Rampur, Kinnaur</span>
+            </div>
+          </div>
+          <a href="tel:01772656326" class="btn-depot-call"><i class="fa-solid fa-phone"></i> Call Shimla ISBT</a>
+        </article>
+
+        <!-- Delhi ISBT Kashmere Gate (HP Counter) -->
+        <article class="depot-card">
+          <div class="depot-card-header">
+            <div class="depot-icon-badge"><i class="fa-solid fa-bus"></i></div>
+            <div>
+              <h3 class="depot-name">Delhi ISBT Kashmere Gate</h3>
+              <span class="depot-location"><i class="fa-solid fa-location-dot"></i> Himachal Counter (Counter 38-40)</span>
+            </div>
+          </div>
+          <div class="depot-contact-list">
+            <div class="depot-row">
+              <span class="depot-label">Delhi Counter:</span>
+              <a href="tel:01123868694" class="depot-value"><i class="fa-solid fa-phone"></i> 011-23868694</a>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">Booking Counter:</span>
+              <span class="depot-value text-neon-green">24/7 Available</span>
+            </div>
+            <div class="depot-row">
+              <span class="depot-label">Departures to:</span>
+              <span class="depot-value text-dim">Baijnath, Dharamshala, Palampur, Manali, Shimla, Kullu</span>
+            </div>
+          </div>
+          <a href="tel:01123868694" class="btn-depot-call"><i class="fa-solid fa-phone"></i> Call Delhi HP Counter</a>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       ADMIN LOGIN MODAL
+       Credentials: thebusjunction@gmail.com / thebusjunction@3852
+       ===================================================================== -->
+  <div class="modal-overlay" id="adminLoginModal" aria-hidden="true" role="dialog" aria-labelledby="adminLoginTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge"><i class="fa-solid fa-shield-halved text-cyan"></i></div>
+          <div>
+            <h3 class="modal-title" id="adminLoginTitle">Route Controller Login</h3>
+            <p class="modal-subtitle">BUSESOFHP(96) Administrative Authorization</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeAdminLoginModalBtn" aria-label="Close Modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form class="modal-form" id="adminLoginForm">
+        <div class="form-group">
+          <label for="adminEmailInput"><i class="fa-regular fa-envelope"></i> Admin ID / Email Address</label>
+          <input type="email" id="adminEmailInput" placeholder="thebusjunction@gmail.com" required autocomplete="username">
+          <span class="form-hint">Authorized administrator email</span>
+        </div>
+
+        <div class="form-group">
+          <label for="adminPassInput"><i class="fa-solid fa-key"></i> Security Password</label>
+          <div class="password-input-wrap">
+            <input type="password" id="adminPassInput" placeholder="Enter administrative password" required autocomplete="current-password">
+            <button type="button" class="toggle-password-btn" id="togglePassBtn" aria-label="Toggle Password Visibility">
+              <i class="fa-regular fa-eye" id="togglePassIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="login-credential-tip">
+          <i class="fa-solid fa-circle-info text-cyan"></i>
+          <span>Administrator Access: Only authorized station masters may alter or delete routes.</span>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancelAdminLoginBtn">Cancel</button>
+          <button type="submit" class="btn-neon-submit" id="submitAdminLoginBtn">
+            <i class="fa-solid fa-right-to-bracket"></i> Sign In to Portal
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       ADD / EDIT LOCAL ROUTE MODAL
+       ===================================================================== -->
+  <div class="modal-overlay" id="localRouteModal" aria-hidden="true" role="dialog" aria-labelledby="localRouteModalTitle">
+    <div class="modal-card modal-card-lg">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge"><i class="fa-solid fa-signs-post text-neon-green"></i></div>
+          <div>
+            <h3 class="modal-title" id="localRouteModalTitle">Add Local Bus Route</h3>
+            <p class="modal-subtitle">Local bus route, frequency & timing management</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeLocalRouteModalBtn" aria-label="Close Modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form class="modal-form" id="localRouteForm">
+        <input type="hidden" id="localRouteEditId" value="">
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="localOriginInput"><i class="fa-solid fa-circle-dot text-neon-green"></i> Origin Station *</label>
+            <input type="text" id="localOriginInput" placeholder="e.g. Baijnath" required>
+          </div>
+
+          <div class="form-group">
+            <label for="localDestinationInput"><i class="fa-solid fa-location-dot text-red"></i> Destination Station *</label>
+            <input type="text" id="localDestinationInput" placeholder="e.g. Dharamshala" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="localViaInput"><i class="fa-solid fa-route text-cyan"></i> Via Major Stops / Landmarks *</label>
+          <input type="text" id="localViaInput" placeholder="e.g. Paprola, Maranda, Palampur, Nagrota Bagwan, Chamunda" required>
+          <span class="form-hint">Separate stops with commas (used for route timeline rendering)</span>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label for="localDepartureTimeInput"><i class="fa-regular fa-clock"></i> Departure Time *</label>
+            <input type="text" id="localDepartureTimeInput" placeholder="e.g. 07:15 AM" required>
+          </div>
+
+          <div class="form-group">
+            <label for="localArrivalTimeInput"><i class="fa-regular fa-clock"></i> Approx Arrival Time *</label>
+            <input type="text" id="localArrivalTimeInput" placeholder="e.g. 09:30 AM" required>
+          </div>
+
+          <div class="form-group">
+            <label for="localFareInput"><i class="fa-solid fa-indian-rupee-sign"></i> Approx Fare (₹) *</label>
+            <input type="number" id="localFareInput" placeholder="e.g. 85" min="5" required>
+          </div>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label for="localBusTypeSelect"><i class="fa-solid fa-bus"></i> Bus Type *</label>
+            <select id="localBusTypeSelect" required>
+              <option value="HRTC Ordinary">HRTC Ordinary</option>
+              <option value="Electric Bus">Electric Bus (Green)</option>
+              <option value="Private Local">Private Local Bus</option>
+              <option value="Mini Bus">Mini / Hill Shuttle</option>
+              <option value="Himmani Deluxe">Himmani Deluxe</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="localOperatorInput"><i class="fa-solid fa-building"></i> Operator / Depot *</label>
+            <input type="text" id="localOperatorInput" placeholder="e.g. HRTC Baijnath Depot" required>
+          </div>
+
+          <div class="form-group">
+            <label for="localFrequencySelect"><i class="fa-solid fa-repeat"></i> Service Frequency *</label>
+            <select id="localFrequencySelect" required>
+              <option value="Daily">Daily Service</option>
+              <option value="Every 30 Mins">Every 30 Mins</option>
+              <option value="Hourly">Hourly Service</option>
+              <option value="Twice Daily">Twice Daily</option>
+              <option value="Mon to Sat">Mon to Sat Only</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="localContactInput"><i class="fa-solid fa-phone"></i> Bus Contact / Conductor Helpline</label>
+            <input type="text" id="localContactInput" placeholder="e.g. 01894-242224 (Baijnath Depot) or 1800-180-8185">
+          </div>
+
+          <div class="form-group">
+            <label for="localStatusSelect"><i class="fa-solid fa-signal"></i> Operational Status *</label>
+            <select id="localStatusSelect" required>
+              <option value="Active & Running">Active & Running (On Time)</option>
+              <option value="Subject to Weather">Subject to Weather</option>
+              <option value="Road Maintenance">Road Maintenance Slowdown</option>
+              <option value="Temporarily Suspended">Temporarily Suspended</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancelLocalRouteBtn">Cancel</button>
+          <button type="submit" class="btn-neon-submit" id="saveLocalRouteBtn">
+            <i class="fa-solid fa-floppy-disk"></i> Save Local Route
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       ADD / EDIT LONG ROUTED BUS MODAL
+       ===================================================================== -->
+  <div class="modal-overlay" id="longRouteModal" aria-hidden="true" role="dialog" aria-labelledby="longRouteModalTitle">
+    <div class="modal-card modal-card-lg">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge"><i class="fa-solid fa-route text-cyan"></i></div>
+          <div>
+            <h3 class="modal-title" id="longRouteModalTitle">Add Long Routed Bus</h3>
+            <p class="modal-subtitle">Inter-state / Inter-district coach schedule management</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeLongRouteModalBtn" aria-label="Close Modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form class="modal-form" id="longRouteForm">
+        <input type="hidden" id="longRouteEditId" value="">
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="longOriginInput"><i class="fa-solid fa-circle-dot text-cyan"></i> Origin Station *</label>
+            <input type="text" id="longOriginInput" placeholder="e.g. Baijnath / Dharamshala / Manali" required>
+          </div>
+
+          <div class="form-group">
+            <label for="longDestinationInput"><i class="fa-solid fa-location-dot text-red"></i> Destination Station *</label>
+            <input type="text" id="longDestinationInput" placeholder="e.g. Delhi ISBT (Kashmere Gate)" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="longViaInput"><i class="fa-solid fa-route text-neon-green"></i> Highway / Major En-Route Stops *</label>
+          <input type="text" id="longViaInput" placeholder="e.g. Palampur, Kangra, Una, Chandigarh, Ambala, Karnal" required>
+          <span class="form-hint">Major highway towns & boarding junctions</span>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label for="longDepartureTimeInput"><i class="fa-regular fa-clock"></i> Departure Time *</label>
+            <input type="text" id="longDepartureTimeInput" placeholder="e.g. 05:30 PM" required>
+          </div>
+
+          <div class="form-group">
+            <label for="longArrivalTimeInput"><i class="fa-regular fa-clock"></i> Next Day Arrival *</label>
+            <input type="text" id="longArrivalTimeInput" placeholder="e.g. 06:15 AM (Next Morning)" required>
+          </div>
+
+          <div class="form-group">
+            <label for="longDistanceInput"><i class="fa-solid fa-road"></i> Distance (km) *</label>
+            <input type="number" id="longDistanceInput" placeholder="e.g. 520" min="20" required>
+          </div>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label for="longBusTypeSelect"><i class="fa-solid fa-bus"></i> Luxury / Coach Category *</label>
+            <select id="longBusTypeSelect" required>
+              <option value="Volvo / Scania Luxury">Volvo / Scania Luxury 2+2 AC</option>
+              <option value="Him-Gaurav AC">Him-Gaurav AC Deluxe</option>
+              <option value="Himmani Deluxe">Himmani Non-AC Deluxe</option>
+              <option value="HRTC Ordinary Express">HRTC Ordinary Superfast</option>
+              <option value="AC Sleeper">AC Multi-Axle Sleeper</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="longFareInput"><i class="fa-solid fa-indian-rupee-sign"></i> Ticket Fare (₹) *</label>
+            <input type="number" id="longFareInput" placeholder="e.g. 1350" min="50" required>
+          </div>
+
+          <div class="form-group">
+            <label for="longOperatorInput"><i class="fa-solid fa-shield-halved"></i> Operator / Service *</label>
+            <input type="text" id="longOperatorInput" placeholder="e.g. HRTC Volvo Wing / Private Luxury" required>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="longPlatformInput"><i class="fa-solid fa-map-pin"></i> Boarding Platform / Stand Counter</label>
+            <input type="text" id="longPlatformInput" placeholder="e.g. Baijnath Platform 1 / ISBT Counter 4">
+          </div>
+
+          <div class="form-group">
+            <label for="longBookingModeSelect"><i class="fa-solid fa-ticket"></i> Booking & Ticket Reservation</label>
+            <select id="longBookingModeSelect" required>
+              <option value="Online (hrtchp.com / RedBus) + Counter">Online (hrtchp.com / Apps) + Counter</option>
+              <option value="Counter Only (On-the-spot)">Counter Only (On-the-spot)</option>
+              <option value="Direct Depot Counter Booking">Direct Depot Counter Booking</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="longStatusSelect"><i class="fa-solid fa-signal"></i> Operational Status *</label>
+            <select id="longStatusSelect" required>
+              <option value="Active & Running">Active & Running (On Time)</option>
+              <option value="Route Diverted">Route Diverted (Alternate Highway)</option>
+              <option value="Subject to Weather">Subject to Weather / Landslide</option>
+              <option value="Delayed Departure">Delayed Departure</option>
+              <option value="Temporarily Suspended">Temporarily Suspended</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="longAmenitiesInput"><i class="fa-solid fa-sparkles"></i> Amenities / Features</label>
+            <input type="text" id="longAmenitiesInput" placeholder="e.g. Pushback Seats, USB Charger, Water Bottle, Blanket, Air Suspension">
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancelLongRouteBtn">Cancel</button>
+          <button type="submit" class="btn-cyan-submit" id="saveLongRouteBtn">
+            <i class="fa-solid fa-floppy-disk"></i> Save Long Route
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       ADD / EDIT DAILY UPDATE BULLETIN MODAL
+       ===================================================================== -->
+  <div class="modal-overlay" id="dailyUpdateModal" aria-hidden="true" role="dialog" aria-labelledby="dailyUpdateModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge"><i class="fa-solid fa-bullhorn text-red"></i></div>
+          <div>
+            <h3 class="modal-title" id="dailyUpdateModalTitle">Post Daily Highway & Bus Update</h3>
+            <p class="modal-subtitle">Official bulletin board broadcast</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeDailyUpdateModalBtn" aria-label="Close Modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form class="modal-form" id="dailyUpdateForm">
+        <input type="hidden" id="dailyUpdateEditId" value="">
+
+        <div class="form-group">
+          <label for="updateTitleInput"><i class="fa-solid fa-heading"></i> Announcement Headline *</label>
+          <input type="text" id="updateTitleInput" placeholder="e.g. NH-154 Mandi-Kangra Highway Road Status" required>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="updateCategorySelect"><i class="fa-solid fa-tag"></i> Category *</label>
+            <select id="updateCategorySelect" required>
+              <option value="road">Road & Weather Condition</option>
+              <option value="delay">Delays & Route Diverted</option>
+              <option value="timetable">Timetable Revision</option>
+              <option value="special">Festival / Special Bus</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="updateSeveritySelect"><i class="fa-solid fa-triangle-exclamation"></i> Alert Level / Color *</label>
+            <select id="updateSeveritySelect" required>
+              <option value="alert">Critical Alert (Red Banner)</option>
+              <option value="info">Advisory / Information (Cyan Banner)</option>
+              <option value="normal">Normal / Active Route (Neon Green Banner)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="updateLocationInput"><i class="fa-solid fa-location-dot"></i> Affected Sector / Highway / Valley *</label>
+          <input type="text" id="updateLocationInput" placeholder="e.g. Baijnath - Palampur - Dharamshala corridor" required>
+        </div>
+
+        <div class="form-group">
+          <label for="updateContentInput"><i class="fa-solid fa-align-left"></i> Full Details & Passenger Instructions *</label>
+          <textarea id="updateContentInput" rows="4" placeholder="Detail the road clearance status, alternate bus arrangements, passenger advisory, and helpline contact..." required></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancelDailyUpdateBtn">Cancel</button>
+          <button type="submit" class="btn-red-submit" id="saveDailyUpdateBtn">
+            <i class="fa-solid fa-paper-plane"></i> Publish Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       ADMIN SETTINGS MODAL (ROUTE ALTERATION & MANAGEMENT HUB)
+       ===================================================================== -->
+  <div class="modal-overlay" id="adminSettingsModal" aria-hidden="true" role="dialog" aria-labelledby="adminSettingsModalTitle">
+    <div class="modal-card modal-card-xl">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge settings-badge"><i class="fa-solid fa-sliders text-cyan"></i></div>
+          <div>
+            <h3 class="modal-title" id="adminSettingsModalTitle">Admin Settings: Route Alteration & Control Hub</h3>
+            <p class="modal-subtitle">BusesOfHP(96) • Super Controller Management Console</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeAdminSettingsModalBtn" aria-label="Close Modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Settings Navigation Tabs -->
+      <div class="settings-tab-nav">
+        <button class="settings-tab-btn active" data-settings-tab="tabSettingsRoutes">
+          <i class="fa-solid fa-route"></i> Route Alteration & Status (<span id="settingsTotalRoutesCount">0</span>)
+        </button>
+        <button class="settings-tab-btn" data-settings-tab="tabSettingsUpdates">
+          <i class="fa-solid fa-bullhorn"></i> Daily Route Updates (<span id="settingsTotalUpdatesCount">0</span>)
+        </button>
+        <button class="settings-tab-btn" data-settings-tab="tabSettingsBackup">
+          <i class="fa-solid fa-database"></i> Backup & Route Data Tools
+        </button>
+      </div>
+
+      <!-- Tab 1: Route Alteration & Quick-Edit Management Hub -->
+      <div class="settings-panel-content active" id="tabSettingsRoutes">
+        <div class="settings-toolbar">
+          <div class="settings-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="adminSettingsRouteSearch" placeholder="Filter routes by station, via stops or operator...">
+          </div>
+          <div class="settings-filter-pills">
+            <button class="settings-filter-pill active" data-settings-filter="all">All Routes</button>
+            <button class="settings-filter-pill" data-settings-filter="local">Local Routes Only</button>
+            <button class="settings-filter-pill" data-settings-filter="long">Long Routes Only</button>
+          </div>
+          <div class="settings-action-group">
+            <button class="btn-neon-sm" id="settingsAddLocalBtn"><i class="fa-solid fa-plus"></i> + Add Local</button>
+            <button class="btn-cyan-sm" id="settingsAddLongBtn"><i class="fa-solid fa-plus"></i> + Add Long</button>
+          </div>
+        </div>
+
+        <!-- Routes Management Table -->
+        <div class="settings-table-wrapper">
+          <table class="settings-table" id="adminRoutesTable">
+            <thead>
+              <tr>
+                <th style="width: 100px;">Type</th>
+                <th>Route (From &rarr; To)</th>
+                <th>Timings & Fare</th>
+                <th>Bus Type / Operator</th>
+                <th>Alter Operational Status</th>
+                <th style="text-align: right; width: 230px;">Alteration Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminRoutesTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 2: Daily Updates Alteration & Deletion -->
+      <div class="settings-panel-content" id="tabSettingsUpdates">
+        <div class="settings-toolbar">
+          <div class="settings-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="adminSettingsUpdateSearch" placeholder="Filter updates by title, location or alert...">
+          </div>
+          <button class="btn-red-sm" id="settingsAddUpdateBtn"><i class="fa-solid fa-plus"></i> + Post New Daily Update</button>
+        </div>
+
+        <div class="settings-table-wrapper">
+          <table class="settings-table" id="adminUpdatesTable">
+            <thead>
+              <tr>
+                <th style="width: 120px;">Alert Level</th>
+                <th>Announcement Headline & Affected Sector</th>
+                <th>Category</th>
+                <th>Last Published</th>
+                <th style="text-align: right; width: 180px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminUpdatesTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 3: Backup & Data Tools -->
+      <div class="settings-panel-content" id="tabSettingsBackup">
+        <div class="backup-tools-grid">
+          <div class="backup-card">
+            <div class="backup-icon text-cyan"><i class="fa-solid fa-file-arrow-down"></i></div>
+            <h4>Export Route Schedules</h4>
+            <p>Download a complete JSON backup of all created Local Routes, Long Routes, and Daily Updates.</p>
+            <button class="btn-cyan-action" id="exportRoutesJsonBtn">
+              <i class="fa-solid fa-download"></i> Export Timetables (JSON)
+            </button>
+          </div>
+
+          <div class="backup-card">
+            <div class="backup-icon text-neon-green"><i class="fa-solid fa-file-arrow-up"></i></div>
+            <h4>Import Route Schedules</h4>
+            <p>Restore or import routes and updates from a previously exported JSON timetable backup.</p>
+            <label class="btn-neon-action file-upload-label" for="importRoutesJsonInput">
+              <i class="fa-solid fa-upload"></i> Choose JSON File
+            </label>
+            <input type="file" id="importRoutesJsonInput" accept=".json" style="display: none;">
+          </div>
+
+          <div class="backup-card danger-card">
+            <div class="backup-icon text-red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h4>Clear All Route Data</h4>
+            <p>Reset all local routes, long routes, and daily updates back to strictly empty (0 routes).</p>
+            <button class="btn-danger-confirm" id="clearAllRoutesBtn">
+              <i class="fa-solid fa-trash-can"></i> Clear All Portal Data
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span class="settings-status-note"><i class="fa-solid fa-shield-check text-neon-green"></i> Station Controller: Changes alter the live public timetables immediately.</span>
+        <button type="button" class="btn-secondary" id="closeAdminSettingsFooterBtn">Close Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       DELETE CONFIRMATION MODAL
+       ===================================================================== -->
+  <div class="modal-overlay" id="confirmDeleteModal" aria-hidden="true" role="dialog" aria-labelledby="confirmDeleteTitle">
+    <div class="modal-card modal-card-sm">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge danger-badge"><i class="fa-solid fa-triangle-exclamation text-red"></i></div>
+          <div>
+            <h3 class="modal-title" id="confirmDeleteTitle">Confirm Deletion</h3>
+            <p class="modal-subtitle">Permanent Administrator Action</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeDeleteModalBtn" aria-label="Close Modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="delete-modal-body">
+        <p id="deleteModalMessage">Are you sure you want to delete this route? This action cannot be undone.</p>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="cancelDeleteBtn">Cancel</button>
+        <button type="button" class="btn-danger-confirm" id="confirmDeleteActionBtn">
+          <i class="fa-solid fa-trash-can"></i> Yes, Delete Permanently
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- Floating Quick Help / Station Helplines Widget -->
+  <aside class="floating-action-bar">
+    <a href="#tabHelplines" data-target-tab="tabHelplines" class="float-btn float-enquiry" title="Depot & Station Helplines">
+      <i class="fa-solid fa-headset"></i>
+      <span class="float-tooltip">Bus Helplines</span>
+    </a>
+    <button class="float-btn float-top" id="scrollTopBtn" title="Back to Top" style="display: none;">
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
+  </aside>
+
+  <!-- Portal Footer -->
+  <footer class="main-footer">
+    <div class="container footer-grid">
+      <div class="footer-col brand-col">
+        <div class="brand-logo footer-logo">
+          <div class="brand-icon-box">
+            <i class="fa-solid fa-bus-simple"></i>
+            <span class="brand-badge-num">96</span>
+          </div>
+          <div class="brand-info">
+            <span class="brand-title-hp">BUSESOFHP<span class="text-neon-green">(96)</span></span>
+            <span class="brand-sub">THE BUS JUNCTION HIMACHAL</span>
+          </div>
+        </div>
+        <p class="footer-tagline">
+          Empowering mountain commuters, students, travelers, and pilgrims with real-time bus schedules across Himachal Pradesh.
+        </p>
+        <div class="footer-status-pill">
+          <span class="neon-dot-small"></span>
+          <span>Official Route Registry • Kangra Valley & Beyond</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-col-title"><i class="fa-solid fa-compass text-cyan"></i> Quick Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="#tabLocalRoutes" data-target-tab="tabLocalRoutes"><i class="fa-solid fa-angle-right"></i> Local Bus Timetable</a></li>
+          <li><a href="#tabLongRoutes" data-target-tab="tabLongRoutes"><i class="fa-solid fa-angle-right"></i> Long-Distance Coaches</a></li>
+          <li><a href="#tabDailyUpdates" data-target-tab="tabDailyUpdates"><i class="fa-solid fa-angle-right"></i> Daily Highway Updates</a></li>
+          <li><a href="#tabHelplines" data-target-tab="tabHelplines"><i class="fa-solid fa-angle-right"></i> Bus Stands Directory</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-col-title"><i class="fa-solid fa-phone text-neon-green"></i> 24/7 Helplines</h4>
+        <ul class="footer-contacts">
+          <li><i class="fa-solid fa-phone text-neon-green"></i> Baijnath Depot: <a href="tel:01894242224">01894-242224</a></li>
+          <li><i class="fa-solid fa-phone text-neon-green"></i> Dharamshala ISBT: <a href="tel:01892224903">01892-224903</a></li>
+          <li><i class="fa-solid fa-phone text-neon-green"></i> Palampur Depot: <a href="tel:01894230666">01894-230666</a></li>
+          <li><i class="fa-solid fa-headset text-cyan"></i> HRTC Central: <a href="tel:18001808185">1800-180-8185</a></li>
+          <li><i class="fa-solid fa-triangle-exclamation text-red"></i> Disaster Helpline: <a href="tel:1077">1077</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col admin-col">
+        <h4 class="footer-col-title"><i class="fa-solid fa-shield-halved text-red"></i> Route Control</h4>
+        <p class="admin-desc">Administrative management portal to change, alter, add or delete bus routes and publish regular daily updates.</p>
+        <button class="btn-footer-admin" id="footerAdminLoginBtn">
+          <i class="fa-solid fa-lock text-cyan"></i>
+          <span>Admin Portal (thebusjunction@gmail.com)</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p class="copyright-text">
+          &copy; 2026 <strong>BUSESOFHP(96)</strong> — The Bus Junction Himachal Pradesh. All rights reserved.
+        </p>
+        <p class="disclaimer-text">
+          Timetables and road conditions are updated regularly by station administrators. Always verify departure times during extreme mountain weather.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
